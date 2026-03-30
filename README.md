@@ -8,15 +8,20 @@ com apoio de ferramentas de Inteligência Artificial.
 O Projeto Clima permite que o usuário informe o nome de uma cidade e visualize
 as condições meteorológicas atuais, incluindo temperatura, umidade, vento,
 sensação térmica e precipitação. O tema visual da interface se adapta
-automaticamente ao período do dia e às condições climáticas.
+automaticamente ao período do dia e às condições climáticas. Os dados buscados
+são armazenados temporariamente em cache para evitar requisições desnecessárias
+à API.
 
 ## ✨ Funcionalidades
 
 - Busca de cidade por nome com geocodificação automática
 - Exibição de temperatura, sensação térmica, umidade, vento, chuva e precipitação
+- Previsão dos próximos 4 dias com temperaturas máximas e mínimas
+- Cache de dados meteorológicos via localStorage (validade de 10 minutos)
 - Ícones de clima via biblioteca Weather Icons
 - Tema visual dinâmico (dia/noite, ensolarado/chuva/tempestade)
 - Exibição de data e hora da consulta
+- Interface responsiva para dispositivos móveis e tablets
 - Tratamento de erros (cidade inválida, falha de rede, API indisponível)
 
 ## 🛠️ Tecnologias
@@ -38,7 +43,7 @@ projeto_clima/
 │   │   └── script.js
 │   └── img/
 │       └── favicon.jpg
-├── tests/
+├── testes/
 │   └── api.test.js
 ├── api.js
 ├── index.html
@@ -51,7 +56,7 @@ projeto_clima/
 
 1. Clone o repositório:
 ```bash
-   git clone https://github.com/jeaninny/projeto_clima
+git clone https://github.com/jeaninny/projeto_clima
 ```
 2. Abra o arquivo `index.html` diretamente no navegador — não é necessário nenhum servidor.
 
@@ -80,6 +85,9 @@ npm test
 | 5 | Excesso de requisições é tratado |
 | 6 | Conexão lenta gera timeout |
 | 7 | Formato inesperado do JSON é tratado |
+| 8 | Previsão retorna dados dos próximos dias |
+| 9 | Falha na API de previsão gera erro adequado |
+| 10 | Previsão com formato inesperado de JSON é tratado |
 
 ## 📦 Dependências de desenvolvimento
 
