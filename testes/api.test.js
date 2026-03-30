@@ -66,11 +66,13 @@ describe('Testes Unitários - App de Clima', () => {
   })
 
   // ── CASOS EXTREMOS ──────────────────────────────
-
+// O api.js atual trata ok: false de forma genérica
+// para diferenciar o 429 seria necessário verificar resposta.status.
   test('5. Excesso de requisições deve ser bloqueado', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 429
+      status: 429,
+      statusText: 'Too Many Requests'
     })
 
     await expect(buscarCoordenadas('São Paulo')).rejects.toThrow(
