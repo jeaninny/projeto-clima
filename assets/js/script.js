@@ -46,7 +46,7 @@ function definirTema(isDay, weatherCode) {
   if ([45, 48].includes(weatherCode)) {
     return `${periodo}-chuva`
   }
-  
+
   return `${periodo}-ensolarado`
 }
 
@@ -69,6 +69,32 @@ function mostrarLoading() {
 
 function esconderLoading() {
   loading.classList.add('escondido')
+}
+
+// ── Cache: salva dados no localStorage ──
+function salvarCache(cidade, dadosClima, dadosPrevisao) {
+  const cache = {
+    dadosClima,
+    dadosPrevisao,
+    timestamp: Date.now()
+  }
+  localStorage.setItem(`cache_${cidade.toLowerCase()}`, JSON.stringify(cache))
+}
+
+// ── Cache: recupera dados do localStorage se ainda válidos (10 min) ──
+function lerCache(cidade) {
+  const item = localStorage.getItem(`cache_${cidade.toLowerCase()}`)
+  if (!item) return null
+
+  const cache = JSON.parse(item)
+  const dezMinutos = 10 * 60 * 1000
+
+  if (Date.now() - cache.timestamp > dezMinutos) {
+    localStorage.removeItem(`cache_${cidade.toLowerCase()}`)
+    return null
+  }
+
+  return cache
 }
 
 // ── Função que busca coordenadas da cidade (Geocoding) ──
@@ -171,6 +197,18 @@ async function buscarClima() {
   esconderErro()
   mostrarLoading()
 
+  // Verifica se existe cache válido para a cidade
+    const cache = lerCache(cidade)
+
+    if (cache) {
+      const local = await buscarCoordenadas(cidade)
+      exibirResultado(cache.dadosClima, local)
+      exibirPrevisao(cache.dadosPrevisao)
+      return
+    }
+
+    // Cache inexistente ou expirado — busca na API
+
   try {
     const local = await buscarCoordenadas(cidade)
 
@@ -182,6 +220,8 @@ async function buscarClima() {
     const respostaPrevisao = await fetch(urlPrevisao)
     const dadosPrevisao = await respostaPrevisao.json()
 
+    salvarCache(cidade, dadosClima, dadosPrevisao)
+    
     exibirResultado(dadosClima, local)
     exibirPrevisao(dadosPrevisao)
 
