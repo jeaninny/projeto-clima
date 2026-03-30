@@ -64,4 +64,29 @@ async function buscarClima(latitude, longitude) {
   return resposta.json()
 }
 
-module.exports = { buscarCoordenadas, buscarClima }
+/**
+ * Busca a previsão do tempo para os próximos 5 dias de uma localização.
+ *
+ * @async
+ * @param {number} latitude - Latitude da localização (ex: -23.55).
+ * @param {number} longitude - Longitude da localização (ex: -46.63).
+ * @returns {Promise<Object>} Objeto JSON com o campo `daily`, contendo arrays de
+ *   datas, temperaturas máximas, mínimas e códigos do tempo.
+ * @throws {Error} Se a requisição à API falhar.
+ *
+ * @example
+ * const previsao = await buscarPrevisao(-23.55, -46.63)
+ * console.log(previsao.daily.temperature_2m_max) // [28, 30, 27, 25, 29]
+ */
+async function buscarPrevisao(latitude, longitude) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`
+  const resposta = await fetch(url)
+
+  if (!resposta.ok) {
+    throw new Error('Falha ao buscar previsão dos próximos dias.')
+  }
+
+  return resposta.json()
+}
+
+module.exports = { buscarCoordenadas, buscarClima, buscarPrevisao }

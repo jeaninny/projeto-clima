@@ -21,7 +21,9 @@ const WMO = {
   63: { desc: 'Chuva moderada',        icone: 'wi wi-rain'         },
   65: { desc: 'Chuva forte',           icone: 'wi wi-rain'         },
   80: { desc: 'Pancadas de chuva',     icone: 'wi wi-showers'      },
+  81: { desc: 'Pancadas moderadas',    icone: 'wi wi-showers'      },
   95: { desc: 'Tempestade',            icone: 'wi wi-thunderstorm' },
+  96: { desc: 'Tempestade c/ granizo leve', icone: 'wi wi-thunderstorm' },
   99: { desc: 'Tempestade c/ granizo', icone: 'wi wi-thunderstorm' },
 }
 
@@ -40,7 +42,11 @@ function definirTema(isDay, weatherCode) {
   if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86].includes(weatherCode)) {
     return `${periodo}-chuva`
   }
-
+  
+  if ([45, 48].includes(weatherCode)) {
+    return `${periodo}-chuva`
+  }
+  
   return `${periodo}-ensolarado`
 }
 
@@ -90,7 +96,7 @@ function exibirResultado(dados, local) {
 
   // Formata data e hora a partir de current.time ("2026-03-30T16:30")
   const dataHora = new Date(clima.time)
-  const data = dataHora.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' })
+  const data = dataHora.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })
   const hora = dataHora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
 
   // Condição do tempo via tabela WMO
@@ -118,6 +124,40 @@ function exibirResultado(dados, local) {
   telaResultado.classList.remove('escondido')
 }
 
+// ── Função que exibe a previsão dos próximos dias ──
+function exibirPrevisao(dados) {
+  const lista = document.getElementById('previsao-lista')
+  lista.innerHTML = ''
+
+  const { time, temperature_2m_max, temperature_2m_min, weather_code } = dados.daily
+
+  // Pula o índice 0 (hoje) e exibe os próximos 4 dias
+  for (let i = 1; i <= 4; i++) {
+    console.log(`Dia ${i}: weather_code = ${weather_code[i]}`)
+    const data = new Date(time[i] + 'T12:00:00')
+    const diaNome = data.toLocaleDateString('pt-BR', { weekday: 'long' })
+    const diaData = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
+    const condicao = getCondicao(weather_code[i])
+    const max = Math.round(temperature_2m_max[i])
+    const min = Math.round(temperature_2m_min[i])
+
+    const item = document.createElement('li')
+    item.className = 'previsao-item'
+    item.innerHTML = `
+      <div class="previsao-dia">
+        <span class="previsao-dia-nome">${diaNome}</span>
+        <span class="previsao-dia-data">${diaData}</span>
+      </div>
+      <i class="previsao-icone ${condicao.icone}" aria-hidden="true"></i>
+      <div class="previsao-temps">
+        <span class="previsao-max">▲ ${max}°</span>
+        <span class="previsao-min">▼ ${min}°</span>
+      </div>
+    `
+    lista.appendChild(item)
+  }
+}
+
 
 // ── Função principal: orquestra geocoding + clima ──
 async function buscarClima() {
@@ -134,11 +174,16 @@ async function buscarClima() {
   try {
     const local = await buscarCoordenadas(cidade)
 
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${local.latitude}&longitude=${local.longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,rain,precipitation,weather_code,is_day,wind_speed_10m,wind_direction_10m&timezone=auto`
-    const resposta = await fetch(url)
-    const dados = await resposta.json()
+    const urlClima = `https://api.open-meteo.com/v1/forecast?latitude=${local.latitude}&longitude=${local.longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,rain,precipitation,weather_code,is_day,wind_speed_10m,wind_direction_10m&timezone=auto`
+    const respostaClima = await fetch(urlClima)
+    const dadosClima = await respostaClima.json()
 
-    exibirResultado(dados, local)
+    const urlPrevisao = `https://api.open-meteo.com/v1/forecast?latitude=${local.latitude}&longitude=${local.longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`
+    const respostaPrevisao = await fetch(urlPrevisao)
+    const dadosPrevisao = await respostaPrevisao.json()
+
+    exibirResultado(dadosClima, local)
+    exibirPrevisao(dadosPrevisao)
 
   } catch (error) {
     esconderLoading()

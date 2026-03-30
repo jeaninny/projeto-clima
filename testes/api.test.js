@@ -1,6 +1,5 @@
-const { buscarCoordenadas, buscarClima } = require('../api.js')
+const { buscarCoordenadas, buscarClima, buscarPrevisao } = require('../api.js')
 
-// Simula o fetch globalmente
 global.fetch = jest.fn()
 
 beforeEach(() => {
@@ -44,20 +43,17 @@ describe('Testes Unitários - App de Clima', () => {
     )
   })
 
+  // Mensagem corrigida para refletir a validação atual do api.js
   test('3. Entrada vazia retorna erro de validação', async () => {
-    global.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ results: [] })
-    })
-
     await expect(buscarCoordenadas('')).rejects.toThrow(
-      'Cidade "" não encontrada. Verifique o nome e tente novamente.'
+      'O nome da cidade não pode ser vazio.'
     )
   })
 
   test('4. Falha da API gera resposta adequada (timeout ou erro)', async () => {
     global.fetch.mockResolvedValueOnce({
-      ok: false
+      ok: false,
+      json: async () => ({})
     })
 
     await expect(buscarCoordenadas('São Paulo')).rejects.toThrow(
@@ -66,13 +62,15 @@ describe('Testes Unitários - App de Clima', () => {
   })
 
   // ── CASOS EXTREMOS ──────────────────────────────
-// O api.js atual trata ok: false de forma genérica
-// para diferenciar o 429 seria necessário verificar resposta.status.
+
+  // O api.js atual trata ok: false de forma genérica.
+  // Para diferenciar o 429 seria necessário verificar resposta.status.
   test('5. Excesso de requisições deve ser bloqueado', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
       status: 429,
-      statusText: 'Too Many Requests'
+      statusText: 'Too Many Requests',
+      json: async () => ({})
     })
 
     await expect(buscarCoordenadas('São Paulo')).rejects.toThrow(
@@ -81,14 +79,10 @@ describe('Testes Unitários - App de Clima', () => {
   })
 
   test('6. Conexão lenta deve dar timeout', async () => {
-    global.fetch.mockImplementationOnce(
-      () => new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout de rede')), 1000)
-      )
-    )
+    global.fetch.mockRejectedValueOnce(new Error('Timeout de rede'))
 
     await expect(buscarCoordenadas('São Paulo')).rejects.toThrow('Timeout de rede')
-  }, 3000)
+  })
 
   test('7. API mudou e quebrou o formato do JSON', async () => {
     global.fetch.mockResolvedValueOnce({
@@ -99,6 +93,49 @@ describe('Testes Unitários - App de Clima', () => {
     await expect(buscarCoordenadas('São Paulo')).rejects.toThrow(
       'Cidade "São Paulo" não encontrada. Verifique o nome e tente novamente.'
     )
+  })
+
+  // ── TESTES BUSCAR PREVISÃO ──────────────────────────────
+
+  test('8. Previsão retorna dados dos próximos dias', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        daily: {
+          time: ['2026-03-30', '2026-03-31', '2026-04-01', '2026-04-02', '2026-04-03'],
+          temperature_2m_max: [30, 32, 28, 27, 29],
+          temperature_2m_min: [22, 23, 20, 19, 21],
+          weather_code: [0, 3, 61, 80, 95]
+        }
+      })
+    })
+
+    const previsao = await buscarPrevisao(-23.55, -46.63)
+
+    expect(previsao.daily.time).toHaveLength(5)
+    expect(previsao.daily.temperature_2m_max[0]).toBe(30)
+    expect(previsao.daily.temperature_2m_min[0]).toBe(22)
+  })
+
+  test('9. Falha na API de previsão gera erro adequado', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({})
+    })
+
+    await expect(buscarPrevisao(-23.55, -46.63)).rejects.toThrow(
+      'Falha ao buscar previsão dos próximos dias.'
+    )
+  })
+
+  test('10. Previsão com formato inesperado de JSON', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({})
+    })
+
+    const previsao = await buscarPrevisao(-23.55, -46.63)
+    expect(previsao.daily).toBeUndefined()
   })
 
 })
