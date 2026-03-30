@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* ── Utilitário: esconde elementos ── */
@@ -17,19 +18,73 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.8s ease, color 0.8s ease;
+  position: relative;
+  overflow: hidden;
 
-  font-family: sans-serif;
-  transition: background 0.6s ease;
-
-  /* Tema dia: gradiente azul claro */
-  background: linear-gradient(135deg, #74b9ff, #a29bfe);
-  color: #2d3436;
+  /* Tema padrão: dia ensolarado */
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255,180,150,0.9) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(220,140,180,0.85) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(180,150,220,0.8) 0%, transparent 60%),
+    linear-gradient(135deg, #fce4ec 0%, #f8bbd0 40%, #e1bee7 100%);
+  color: #2d1b3d;
 }
 
-/* ── Tema noturno ── */
-body[data-periodo="noite"] {
-  background: linear-gradient(135deg, #2d3436, #6c5ce7);
-  color: #f0f0f0;
+/* ── Temas: dia ── */
+body[data-periodo="dia-ensolarado"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255,180,150,0.9) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(220,140,180,0.85) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(180,150,220,0.8) 0%, transparent 60%),
+    linear-gradient(135deg, #fce4ec 0%, #f8bbd0 40%, #e1bee7 100%);
+  color: #2d1b3d;
+}
+
+body[data-periodo="dia-chuva"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(80,100,180,0.7) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(100,120,200,0.65) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(60,80,160,0.6) 0%, transparent 60%),
+    linear-gradient(135deg, #b0bec5 0%, #90a4ae 40%, #7986cb 100%);
+  color: #e8edf5;
+}
+
+body[data-periodo="dia-tempestade"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(60,50,120,0.8) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(40,40,100,0.75) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(80,60,140,0.7) 0%, transparent 60%),
+    linear-gradient(135deg, #2d2d44 0%, #1a1a2e 40%, #1a1a3e 100%);
+  color: #c8d0e8;
+}
+
+/* ── Temas: noite ── */
+body[data-periodo="noite-ensolarado"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(80,20,180,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(20,60,180,0.45) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(180,20,120,0.35) 0%, transparent 60%),
+    linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a0a2e 100%);
+  color: #e8eef8;
+}
+
+body[data-periodo="noite-chuva"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(20,40,120,0.7) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(10,30,100,0.65) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(30,50,140,0.6) 0%, transparent 60%),
+    linear-gradient(135deg, #050e2a 0%, #0a1535 40%, #060d28 100%);
+  color: #c8d8f0;
+}
+
+body[data-periodo="noite-tempestade"] {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(40,20,80,0.8) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(20,10,60,0.75) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(60,20,100,0.7) 0%, transparent 60%),
+    linear-gradient(135deg, #080010 0%, #100020 40%, #080018 100%);
+  color: #b0b8d0;
 }
 
 /* ── Card principal ── */
@@ -38,26 +93,47 @@ body[data-periodo="noite"] {
   width: 100%;
   max-width: 400px;
   padding: 32px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+body[data-periodo="dia-tempestade"] #tela-busca,
+body[data-periodo="dia-tempestade"] #tela-resultado,
+body[data-periodo="noite-ensolarado"] #tela-busca,
+body[data-periodo="noite-ensolarado"] #tela-resultado,
+body[data-periodo="noite-chuva"] #tela-busca,
+body[data-periodo="noite-chuva"] #tela-resultado,
+body[data-periodo="noite-tempestade"] #tela-busca,
+body[data-periodo="noite-tempestade"] #tela-resultado {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Tela de busca: header ── */
 #tela-busca header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 #tela-busca h1 {
-  font-size: 24px;
-  margin-bottom: 8px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
 }
 
 #tela-busca p {
   font-size: 14px;
-  opacity: 0.7;
+  opacity: 0.55;
+  font-weight: 400;
 }
 
 /* ── Tela de busca: campo de busca ── */
@@ -80,12 +156,49 @@ body[data-periodo="noite"] {
 #btn-buscar {
   padding: 12px 20px;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   font-size: 15px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.4);
-  color: inherit;
+  font-weight: 600;
   cursor: pointer;
+  background: linear-gradient(135deg, #f48fb1, #ce93d8);
+  color: white;
+  box-shadow: 0 4px 16px rgba(200, 100, 180, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#btn-buscar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(200, 100, 180, 0.45);
+}
+
+#btn-buscar:active {
+  transform: translateY(0);
+}
+
+/* ── Resultado: botão voltar ── */
+#btn-voltar {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f48fb1, #ce93d8);
+  color: white;
+  box-shadow: 0 4px 16px rgba(200, 100, 180, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+#btn-voltar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(200, 100, 180, 0.45);
+}
+
+#btn-voltar:active {
+  transform: translateY(0);
 }
 
 /* ── Erro ── */
@@ -105,22 +218,30 @@ body[data-periodo="noite"] {
   text-align: center;
 }
 
+/* ── Ícone Weather Icons ── */
+#icone-tempo {
+  font-size: 64px;
+}
+
 /* ── Resultado: cidade ── */
 .cidade-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 #cidade-nome {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 #cidade-pais {
-  font-size: 14px;
-  opacity: 0.7;
+  font-size: 13px;
+  opacity: 0.5;
+  font-weight: 400;
+  margin-top: 2px;
 }
 
 /* ── Resultado: temperatura ── */
@@ -128,18 +249,21 @@ body[data-periodo="noite"] {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 #temperatura {
-  font-size: 72px;
-  font-weight: bold;
+  font-size: 80px;
+  font-weight: 300;
   line-height: 1;
+  letter-spacing: -3px;
 }
 
 .unidade {
   font-size: 28px;
+  font-weight: 300;
   margin-top: 12px;
+  opacity: 0.7;
 }
 
 /* ── Resultado: condição do tempo ── */
@@ -147,12 +271,19 @@ body[data-periodo="noite"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  margin-bottom: 24px;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 #icone-tempo {
-  font-size: 48px;
+  font-size: 64px;
+}
+
+#descricao-tempo {
+  font-size: 14px;
+  opacity: 0.6;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 #descricao-tempo {
@@ -162,23 +293,28 @@ body[data-periodo="noite"] {
 
 /* ── Resultado: data e hora ── */
 .consulta-tempo {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  font-size: 13px;
-  opacity: 0.6;
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  opacity: 0.65;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin: 0 auto 20px;
 }
 
 /* ── Resultado: grade de detalhes ── */
 .detalhes-grade {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
+  gap: 8px;
   list-style: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  padding-top: 20px;
-  margin-bottom: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: 18px;
+  margin-bottom: 20px;
 }
 
 .detalhe {
@@ -186,32 +322,27 @@ body[data-periodo="noite"] {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.15);
+  padding: 12px 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.detalhe:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .detalhe-rotulo {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.5;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .detalhe-valor {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* ── Resultado: botão voltar ── */
-#btn-voltar {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  background: rgba(255, 255, 255, 0.25);
-  color: inherit;
-  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
 }
