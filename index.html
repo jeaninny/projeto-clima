@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Clima</title>
+    <meta name="author" content="Jeaninny Teixeira">
+    <meta name="description" content="API de Previsão do Tempo">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.jpg">
+
+
+    <!-- CSS principal da página -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+</head>
+
+<body data-periodo="dia">
+
+    <!-- TELA 1 — Busca -->
+    <section id="tela-busca">
+
+        <header>
+            <h1>Previsão do Tempo</h1>
+            <p>Digite uma cidade para ver o clima atual.</p>
+        </header>
+
+        <div class="busca-wrapper">
+            <input type="text" id="input-cidade" placeholder="Ex: Rio de Janeiro" autocomplete="off"
+                aria-label="Nome da cidade" />
+            <button id="btn-buscar" type="button">Buscar</button>
+        </div>
+
+        <!-- Aparece só quando a cidade não é encontrada -->
+        <div id="erro" class="escondido" role="alert">
+            <p id="erro-mensagem"></p>
+        </div>
+
+    </section>
+
+
+    <!-- TELA 2 — Resultado -->
+    <section id="tela-resultado" class="escondido">
+
+        <!-- Identificação da cidade -->
+        <div class="cidade-info">
+            <h2 id="cidade-nome">--</h2>
+            <span id="cidade-pais">--</span>
+        </div>
+
+        <!-- Data e hora da consulta → current.time -->
+        <div class="consulta-tempo">
+            <span id="consulta-data">--</span>
+            <span id="consulta-hora">--</span>
+        </div>
+
+        <!-- Temperatura principal -->
+        <div class="temperatura-principal">
+            <span id="temperatura">--</span>
+            <span class="unidade">--</span>
+        </div>
+
+        <!-- Derivados do weathercode -->
+        <div class="condicao-tempo">
+            <span id="icone-tempo" aria-hidden="true"></span>
+            <p id="descricao-tempo">--</p>
+        </div>
+
+        <!-- Detalhes disponíveis no current_weather -->
+        <ul class="detalhes-grade">
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Umidade</span>
+                <!-- current.relative_humidity_2m (unidade: %) -->
+                <span id="umidade" class="detalhe-valor">--</span>
+            </li>
+
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Sensação</span>
+                <!-- current.apparent_temperature (unidade: °C) -->
+                <span id="sensacao-termica" class="detalhe-valor">--</span>
+            </li>
+
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Vento</span>
+                <!-- current.wind_speed_10m (unidade: km/h) -->
+                <span id="vento-velocidade" class="detalhe-valor">--</span>
+            </li>
+
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Direção</span>
+                <!-- current.wind_direction_10m (unidade: °) -->
+                <span id="vento-direcao" class="detalhe-valor">--</span>
+            </li>
+
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Chuva</span>
+                <!-- current.rain (unidade: mm) -->
+                <span id="chuva" class="detalhe-valor">--</span>
+            </li>
+
+            <li class="detalhe">
+                <span class="detalhe-rotulo">Precipitação</span>
+                <!-- current.precipitation (unidade: mm) -->
+                <span id="precipitacao" class="detalhe-valor">--</span>
+            </li>
+
+
+
+        </ul>
+
+        <button id="btn-voltar" type="button">← Nova busca</button>
+
+    </section>
+
+
+    <!-- FEEDBACK — Loading -->
+    <div id="loading" class="escondido" role="status" aria-live="polite">
+        <p>Buscando dados...</p>
+    </div>
+
+    <!-- Script JavaScript principal da página-->
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

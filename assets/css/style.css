@@ -1,0 +1,217 @@
+/* Reset do Navegador */
+/* ── Reset ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Utilitário: esconde elementos ── */
+.escondido {
+  display: none;
+}
+
+/* ── Body: centralização e tema padrão (dia) ── */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: sans-serif;
+  transition: background 0.6s ease;
+
+  /* Tema dia: gradiente azul claro */
+  background: linear-gradient(135deg, #74b9ff, #a29bfe);
+  color: #2d3436;
+}
+
+/* ── Tema noturno ── */
+body[data-periodo="noite"] {
+  background: linear-gradient(135deg, #2d3436, #6c5ce7);
+  color: #f0f0f0;
+}
+
+/* ── Card principal ── */
+#tela-busca,
+#tela-resultado {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Tela de busca: header ── */
+#tela-busca header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+#tela-busca h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+#tela-busca p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ── Tela de busca: campo de busca ── */
+.busca-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+#input-cidade {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  color: inherit;
+  outline: none;
+}
+
+#btn-buscar {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.4);
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ── Erro ── */
+#erro {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  background: rgba(255, 100, 100, 0.25);
+  border-left: 4px solid rgba(255, 100, 100, 0.8);
+}
+
+/* ── Loading ── */
+#loading {
+  font-size: 16px;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+/* ── Resultado: cidade ── */
+.cidade-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#cidade-nome {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#cidade-pais {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ── Resultado: temperatura ── */
+.temperatura-principal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+#temperatura {
+  font-size: 72px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.unidade {
+  font-size: 28px;
+  margin-top: 12px;
+}
+
+/* ── Resultado: condição do tempo ── */
+.condicao-tempo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+#icone-tempo {
+  font-size: 48px;
+}
+
+#descricao-tempo {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* ── Resultado: data e hora ── */
+.consulta-tempo {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+/* ── Resultado: grade de detalhes ── */
+.detalhes-grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 20px;
+  margin-bottom: 24px;
+}
+
+.detalhe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.detalhe-rotulo {
+  font-size: 12px;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detalhe-valor {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ── Resultado: botão voltar ── */
+#btn-voltar {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+  cursor: pointer;
+}
