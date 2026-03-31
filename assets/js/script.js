@@ -50,6 +50,51 @@ function definirTema(isDay, weatherCode) {
   return `${periodo}-ensolarado`
 }
 
+// ── Cria estrelas animadas para temas noturnos ──
+function criarEstrelas() {
+  const container = document.getElementById('particulas')
+  container.innerHTML = ''
+
+  for (let i = 0; i < 80; i++) {
+    const estrela = document.createElement('div')
+    estrela.className = 'estrela'
+
+    const tamanho = Math.random() * 2.5 + 1
+    estrela.style.width  = `${tamanho}px`
+    estrela.style.height = `${tamanho}px`
+    estrela.style.top    = `${Math.random() * 100}%`
+    estrela.style.left   = `${Math.random() * 100}%`
+    estrela.style.animationDuration = `${Math.random() * 3 + 2}s`
+    estrela.style.animationDelay    = `${Math.random() * 4}s`
+
+    container.appendChild(estrela)
+  }
+}
+
+// ── Cria gotas de chuva animadas ──
+function criarChuva() {
+  const container = document.getElementById('particulas')
+  container.innerHTML = ''
+
+  for (let i = 0; i < 60; i++) {
+    const gota = document.createElement('div')
+    gota.className = 'gota'
+
+    const altura = Math.random() * 60 + 40
+    gota.style.height          = `${altura}px`
+    gota.style.left            = `${Math.random() * 100}%`
+    gota.style.animationDuration = `${Math.random() * 0.8 + 0.6}s`
+    gota.style.animationDelay    = `${Math.random() * 2}s`
+
+    container.appendChild(gota)
+  }
+}
+
+// ── Limpa as partículas ──
+function limparParticulas() {
+  document.getElementById('particulas').innerHTML = ''
+}
+
 // ── Funções auxiliares ──
 function mostrarErro(mensagem) {
   erroMensagem.textContent = mensagem
@@ -64,11 +109,13 @@ function esconderErro() {
 
 function mostrarLoading() {
   loading.classList.remove('escondido')
+  loading.classList.add('visivel')
   telaBusca.classList.add('escondido')
 }
 
 function esconderLoading() {
   loading.classList.add('escondido')
+  loading.classList.remove('visivel')
 }
 
 // ── Cache: salva dados no localStorage ──
@@ -143,7 +190,16 @@ function exibirResultado(dados, local) {
   document.getElementById('chuva').textContent = clima.rain + unidade.rain
   document.getElementById('precipitacao').textContent = clima.precipitation + unidade.precipitation
 
-  document.body.dataset.periodo = definirTema(clima.is_day, clima.weather_code)
+  const tema = definirTema(clima.is_day, clima.weather_code)
+  document.body.dataset.periodo = tema
+  
+  if (tema.includes('noite')) {
+    criarEstrelas()
+  } else if (tema.includes('chuva') || tema.includes('tempestade')) {
+    criarChuva()
+  } else {
+    limparParticulas()
+  }
 
   esconderLoading()
   telaBusca.classList.add('escondido')
@@ -158,8 +214,7 @@ function exibirPrevisao(dados) {
   const { time, temperature_2m_max, temperature_2m_min, weather_code } = dados.daily
 
   // Pula o índice 0 (hoje) e exibe os próximos 4 dias
-  for (let i = 1; i <= 4; i++) {
-    console.log(`Dia ${i}: weather_code = ${weather_code[i]}`)
+  for (let i = 1; i <= 4; i++) {    
     const data = new Date(time[i] + 'T12:00:00')
     const diaNome = data.toLocaleDateString('pt-BR', { weekday: 'long' })
     const diaData = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
@@ -239,7 +294,8 @@ btnVoltar.addEventListener('click', function() {
   telaBusca.classList.remove('escondido')
   esconderErro()
   inputCidade.value = ''
-  document.body.dataset.periodo = 'dia-ensolarado'
+  document.body.dataset.periodo = 'inicial'
+  limparParticulas()
 })
 
 inputCidade.addEventListener('keydown', function(event) {

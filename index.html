@@ -10,8 +10,12 @@
     <meta name="robots" content="index, follow">
     <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.jpg">
 
+        <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonte do Google - Nunito -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
 
@@ -20,7 +24,8 @@
 
 </head>
 
-<body data-periodo="dia">
+<body data-periodo="inicial">
+    <div id="particulas"></div>
 
     <!-- TELA 1 — Busca -->
     <section id="tela-busca">
@@ -31,8 +36,8 @@
         </header>
 
         <div class="busca-wrapper">
-            <input type="text" id="input-cidade" placeholder="Ex: Rio de Janeiro" autocomplete="off"
-                aria-label="Nome da cidade" />
+            <input type="text" id="input-cidade" placeholder="Ex: Rio de Janeiro, Brasil" autocomplete="off"
+    aria-label="Nome da cidade" />
             <button id="btn-buscar" type="button">Buscar</button>
         </div>
 
@@ -124,7 +129,8 @@
 
     <!-- FEEDBACK — Loading -->
     <div id="loading" class="escondido" role="status" aria-live="polite">
-        <p>Buscando dados...</p>
+        <div class="loading-spinner"></div>
+        <p class="loading-texto">Buscando dados<span class="loading-pontos"></span></p>
     </div>
 
     <!-- Script JavaScript principal da página-->

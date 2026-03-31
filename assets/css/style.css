@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 /* ── Utilitário: esconde elementos ── */
@@ -18,27 +18,43 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.8s ease, color 0.8s ease;
+  transition: color 0.8s ease;
   position: relative;
-  overflow: hidden;
 
-  /* Tema padrão: dia ensolarado */
+  /* Tema padrão: tela inicial rosa/roxo */
+background:    
+    radial-gradient(ellipse at 0% 0%, rgba(255,182,210,1) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 0%, rgba(195,160,230,1) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,200,220,0.9) 0%, transparent 45%),
+    linear-gradient(135deg, #f7c5d8 0%, #c8a8e8 40%, #f0b8cc 70%, #c8a8e8 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 8s ease infinite;
+  color: #3d2a3a;
+}
+
+/* ── Tema: inicial ── */
+
+body[data-periodo="inicial"] {
   background:
-    radial-gradient(ellipse at 20% 10%, rgba(255,180,150,0.9) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 0%, rgba(220,140,180,0.85) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(180,150,220,0.8) 0%, transparent 60%),
-    linear-gradient(135deg, #fce4ec 0%, #f8bbd0 40%, #e1bee7 100%);
-  color: #2d1b3d;
+    radial-gradient(ellipse at 0% 0%, rgba(255,182,210,1) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 0%, rgba(195,160,230,1) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,200,220,0.9) 0%, transparent 45%),
+    linear-gradient(135deg, #f7c5d8 0%, #c8a8e8 40%, #f0b8cc 70%, #c8a8e8 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 8s ease infinite;
+  color: #3d2a3a;
 }
 
 /* ── Temas: dia ── */
 body[data-periodo="dia-ensolarado"] {
   background:
-    radial-gradient(ellipse at 20% 10%, rgba(255,180,150,0.9) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 0%, rgba(220,140,180,0.85) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(180,150,220,0.8) 0%, transparent 60%),
-    linear-gradient(135deg, #fce4ec 0%, #f8bbd0 40%, #e1bee7 100%);
-  color: #2d1b3d;
+    radial-gradient(ellipse at 10% 20%, rgba(255,255,255,0.7) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 80%, rgba(255,255,255,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 55%),
+    linear-gradient(135deg, #1976d2 0%, #64b5f6 35%, #bbdefb 55%, #64b5f6 75%, #1976d2 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 14s ease infinite;
+  color: #0d2137;
 }
 
 body[data-periodo="dia-chuva"] {
@@ -46,7 +62,9 @@ body[data-periodo="dia-chuva"] {
     radial-gradient(ellipse at 20% 10%, rgba(80,100,180,0.7) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 0%, rgba(100,120,200,0.65) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(60,80,160,0.6) 0%, transparent 60%),
-    linear-gradient(135deg, #b0bec5 0%, #90a4ae 40%, #7986cb 100%);
+    linear-gradient(135deg, #b0bec5 0%, #90a4ae 40%, #7986cb 60%, #b0bec5 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 12s ease infinite;
   color: #e8edf5;
 }
 
@@ -55,7 +73,9 @@ body[data-periodo="dia-tempestade"] {
     radial-gradient(ellipse at 20% 10%, rgba(60,50,120,0.8) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 0%, rgba(40,40,100,0.75) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(80,60,140,0.7) 0%, transparent 60%),
-    linear-gradient(135deg, #2d2d44 0%, #1a1a2e 40%, #1a1a3e 100%);
+    linear-gradient(135deg, #2d2d44 0%, #1a1a2e 40%, #1a1a3e 60%, #2d2d44 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 10s ease infinite;
   color: #c8d0e8;
 }
 
@@ -65,7 +85,9 @@ body[data-periodo="noite-ensolarado"] {
     radial-gradient(ellipse at 20% 10%, rgba(80,20,180,0.5) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 0%, rgba(20,60,180,0.45) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(180,20,120,0.35) 0%, transparent 60%),
-    linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a0a2e 100%);
+    linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a0a2e 60%, #0a0a1a 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 15s ease infinite;
   color: #e8eef8;
 }
 
@@ -74,7 +96,9 @@ body[data-periodo="noite-chuva"] {
     radial-gradient(ellipse at 20% 10%, rgba(20,40,120,0.7) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 0%, rgba(10,30,100,0.65) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(30,50,140,0.6) 0%, transparent 60%),
-    linear-gradient(135deg, #050e2a 0%, #0a1535 40%, #060d28 100%);
+    linear-gradient(135deg, #050e2a 0%, #0a1535 40%, #060d28 60%, #050e2a 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 15s ease infinite;
   color: #c8d8f0;
 }
 
@@ -83,7 +107,9 @@ body[data-periodo="noite-tempestade"] {
     radial-gradient(ellipse at 20% 10%, rgba(40,20,80,0.8) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 0%, rgba(20,10,60,0.75) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(60,20,100,0.7) 0%, transparent 60%),
-    linear-gradient(135deg, #080010 0%, #100020 40%, #080018 100%);
+    linear-gradient(135deg, #080010 0%, #100020 40%, #080018 60%, #080010 100%);
+  background-size: 300% 300%;
+  animation: gradiente-animado 10s ease infinite;
   color: #b0b8d0;
 }
 
@@ -214,9 +240,46 @@ body[data-periodo="noite-tempestade"] #tela-resultado {
 
 /* ── Loading ── */
 #loading {
-  font-size: 16px;
-  color: #f0f0f0;
-  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#loading.visivel {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.8);
+  animation: spinner-girar 0.9s linear infinite;
+}
+
+@keyframes spinner-girar {
+  to { transform: rotate(360deg); }
+}
+
+.loading-texto {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.05em;
+}
+
+@keyframes pontos-piscar {
+  0%, 20%  { content: '.';   }
+  40%      { content: '..';  }
+  60%      { content: '...'; }
+  80%, 100%{ content: '';    }
+}
+
+.loading-pontos::after {
+  content: '';
+  animation: pontos-piscar 1.5s steps(1) infinite;
 }
 
 /* ── Ícone Weather Icons ── */
@@ -235,7 +298,7 @@ body[data-periodo="noite-tempestade"] #tela-resultado {
 #cidade-nome {
   font-size: 30px;
   font-weight: 600;
-  letter-spacing: -0.5px;
+  margin-bottom: 0;
 }
 
 #cidade-pais {
@@ -256,8 +319,7 @@ body[data-periodo="noite-tempestade"] #tela-resultado {
 #temperatura {
   font-size: 80px;
   font-weight: 300;
-  line-height: 1;
-  letter-spacing: -3px;
+  line-height: 1;  
 }
 
 .unidade {
@@ -427,6 +489,73 @@ body[data-periodo="noite-tempestade"] #tela-resultado {
   opacity: 0.5;
 }
 
+/* ── Animação: gradiente em movimento ── */
+@keyframes gradiente-animado {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Animação: transição suave das telas ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#tela-busca,
+#tela-resultado {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ── Partículas: container ── */
+#particulas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* ── Partículas: estrelas ── */
+@keyframes estrela-piscar {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%       { opacity: 1; transform: scale(1); }
+}
+
+.estrela {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: estrela-piscar ease-in-out infinite;
+}
+
+/* ── Partículas: chuva ── */
+@keyframes gota-cair {
+  0%   { transform: translateY(-10px); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.gota {
+  position: absolute;
+  width: 1.5px;
+  background: linear-gradient(to bottom, transparent, rgba(180, 210, 255, 0.6));
+  border-radius: 0 0 2px 2px;
+  animation: gota-cair linear infinite;
+}
+
+/* ── Garante que o card fique acima das partículas ── */
+#tela-busca,
+#tela-resultado,
+#loading {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── Responsividade: Tablet ── */
 @media screen and (max-width: 1024px) {
   #tela-busca,
@@ -439,6 +568,7 @@ body[data-periodo="noite-tempestade"] #tela-resultado {
 @media screen and (max-width: 480px) {
   body {
     overflow-y: auto;
+    overflow-x: hidden;
     align-items: center; 
     padding: 24px 16px;
   }
