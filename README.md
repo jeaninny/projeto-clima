@@ -33,6 +33,31 @@ são armazenados temporariamente em cache para evitar requisições desnecessár
 - [Weather Icons](https://erikflowers.github.io/weather-icons/) — ícones meteorológicos
 - [Jest](https://jestjs.io/) — testes unitários
 
+
+## 📸 Exemplos de uso
+
+### 🔎 Tela inicial + ⚠️ Erro
+<p align="center">
+  <img src="./assets/img/tela-inicial.png" width="260"/>
+  <img src="./assets/img/tela-erro.png" width="260"/>
+</p>
+
+---
+
+### 🌤️ Resultado (dia) + 🌧️ Chuva
+<p align="center">
+  <img src="./assets/img/tela-resultado-dia.png" width="260"/>
+  <img src="./assets/img/tela-resultado-dia-chuvoso-avisos.png" width="260"/>
+</p>
+
+---
+
+### 🌙 Resultado (noite)
+<p align="center">
+  <img src="./assets/img/tela-resultado-noite.png" width="260"/>
+</p>
+
+
 ## 📁 Estrutura de Pastas
 ```
 projeto_clima/
@@ -56,7 +81,7 @@ projeto_clima/
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/jeaninny/projeto_clima
+git clone https://github.com/jeaninny/projeto-clima
 ```
 2. Abra o arquivo `index.html` diretamente no navegador — não é necessário nenhum servidor.
 
@@ -95,10 +120,43 @@ npm test
 |--------|--------|------------|
 | jest   | ^29.x  | Testes unitários |
 
+
+### 🔎 Análise de Segurança
+
+**Riscos identificados:**
+- Dependência de API externa (Open-Meteo)
+- Armazenamento temporário em localStorage
+- Entrada de dados livre pelo usuário
+
+**Medidas adotadas:**
+- Uso de HTTPS em todas as requisições
+- Validação básica de entrada (campo obrigatório)
+- Cache com expiração automática (10 minutos)
+
+**Recomendações futuras:**
+- Implementar tratamento mais robusto de erros da API
+- Adicionar limites de requisição (rate limiting)
+- Melhorar sanitização de entrada do usuário
+
+
+## 🙏 Créditos
+
+- Open-Meteo API — dados meteorológicos (licença CC BY 4.0)
+- Weather Icons — ícones climáticos
+- Google Fonts — tipografia
+
+Consulte o arquivo NOTICE.md para detalhes completos.
+
 ## 📄 Licença
 
-Este projeto foi desenvolvido para fins educacionais.
+Este projeto está licenciado sob a licença MIT.
+
+Consulte o arquivo LICENSE para mais detalhes.
 
 ## 👩‍💻 Autora
 
-Jeaninny Teixeira
+**Jeaninny Teixeira - Desenvolvedora FullStack**
+
+🔗 GitHub: https://github.com/jeaninny
+
+🔗 LinkedIn: https://www.linkedin.com/in/jeaninnyteixeira/
